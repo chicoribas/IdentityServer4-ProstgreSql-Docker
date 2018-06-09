@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  identityserver:
+    image: ${DOCKER_REGISTRY}identityserver
+    ports:
+      - 5000:80
+    build:
+      context: .
+      dockerfile: IdentityServer/Dockerfile
+    networks:
+      - identityserver-network
+  
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: db
+      POSTGRES_USER: identityserver-db
+      POSTGRES_DB: identityserver-localdb
+    ports:
+      - 5432:5432
+    volumes:
+      - identityserver-postgres-data:/var/lib/postgresql/data    
+    networks:
+      - identityserver-network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - identityserver-network
+
+volumes:
+  identityserver-postgres-data:
+    
+
+networks:
+  identityserver-network:
+    driver: bridge
