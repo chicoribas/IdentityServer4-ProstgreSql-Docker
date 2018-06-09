@@ -8,10 +8,10 @@ COPY IdentityServer/IdentityServer.csproj IdentityServer/
 RUN dotnet restore IdentityServer/IdentityServer.csproj
 COPY . .
 WORKDIR /src/IdentityServer
-RUN dotnet build IdentityServer.csproj -c Release -o /app
+RUN dotnet build IdentityServer.csproj -c Docker -o /app
 
 FROM build AS publish
-RUN dotnet publish IdentityServer.csproj -c Release -o /app
+RUN dotnet publish IdentityServer.csproj -c Docker -o /app
 
 FROM base AS final
 WORKDIR /app

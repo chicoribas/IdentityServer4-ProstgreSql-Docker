@@ -3,6 +3,6 @@ version: '3.4'
 services:
   identityserver:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Docker
     ports:
       - "80"
